@@ -38,7 +38,7 @@
                     {% for aprendiz in lista_aprendices %}
                     <tr>
                         <td><strong>{{ aprendiz.documento_identidad }}</strong></td>
-                        <td>{{ aprendiz.nombre_completo }}</td>
+                        <td>{{ aprendiz.nombre}}{{aprendiz.apellido}}</td>
                         <td>
                             <a href="mailto:{{ aprendiz.correo }}">{{ aprendiz.correo }}</a>
                         </td>

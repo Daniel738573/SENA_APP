@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "aprendices",  # Custom app for apprentices
+    "instructores",  # Custom app for instructors
+    "programas",  # Custom app for programs
 ]
 
 MIDDLEWARE = [
