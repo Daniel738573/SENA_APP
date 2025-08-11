@@ -24,8 +24,8 @@
             <table class="table table-striped table-hover">
                 <thead class="table-dark">
                     <tr>
-                        <th>Documento</th>
                         <th>Tipo Documento</th>
+                        <th>Documento</th>
                         <th>Nombre Completo</th>
                         <th>Correo</th>
                         <th>Teléfono</th>
@@ -34,14 +34,15 @@
                         <th>Nivel Educativo</th>
                         <th>Fecha Nacimiento</th>
                         <th>Especialidad</th>
+                        <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for instructor in lista_instructores %}
                     <tr>
-                        <td><strong>{{ instructor.documento_identidad }}</strong></td>
                         <td>{{ instructor.tipo_documento }}</td>
-                        <td>{{ instructor.nombre }}{{ instructor.apellido }}</td>
+                        <td><strong><a href ="instructor/{{ instructor.id }}">{{ instructor.documento_identidad }}</a></strong></td>
+                        <td>{{ instructor.nombre_completo }}</td>
                         <td>
                             <a href="mailto:{{ instructor.correo }}">{{ instructor.correo }}</a>
                         </td>

@@ -24,9 +24,7 @@ class Programa(models.Model):
         ("CAN", "Cancelado"),
     ]
 
-    codigo = models.CharField(
-        max_length=20, unique=True, verbose_name="Código del Programa"
-    )
+    codigo = models.IntegerField(unique=True, verbose_name="Código del Programa")
     nombre = models.CharField(max_length=200, verbose_name="Nombre del Programa")
     nivel_formacion = models.CharField(
         max_length=3, choices=NIVEL_FORMACION_CHOICES, verbose_name="Nivel de Formación"

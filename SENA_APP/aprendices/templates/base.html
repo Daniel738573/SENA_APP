@@ -9,13 +9,13 @@
     <link rel="stylesheet" href="{% static 'css/estilos.css' %}">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style>
+<style>
         :root {
             --sena-green: #39A900;
             --sena-dark-green: #2d7d00;
             --sena-light-green: #4cc200;
             --sena-orange: #FF6600;
-            --sena-blue: #0066CC;
+            --sena-blue: #39f81cff;
             --sena-gray: #f8f9fa;
             --sena-dark-gray: #6c757d;
             --white: #ffffff;
@@ -24,6 +24,9 @@
             --shadow-heavy: 0 8px 35px rgba(57, 169, 0, 0.2);
             --border-radius: 12px;
             --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --gradient-primary: linear-gradient(135deg, var(--sena-green) 0%, var(--sena-light-green) 100%);
+            --gradient-secondary: linear-gradient(135deg, var(--sena-blue) 0%, #0052a3 100%);
+            --gradient-accent: linear-gradient(135deg, var(--sena-orange) 0%, #e55100 100%);
         }
 
         * {
@@ -33,24 +36,25 @@
         }
 
         body {
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Poppins', 'Arial', sans-serif;
             background: linear-gradient(135deg, #f8fffe 0%, #f0f8f5 100%);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             line-height: 1.6;
             color: #2d3748;
+            overflow-x: hidden;
         }
 
-        /* Header */
+        /* Header & Navigation */
         .navbar {
-            background: linear-gradient(135deg, var(--sena-green) 0%, var(--sena-light-green) 100%);
+            background: var(--gradient-primary);
             box-shadow: var(--shadow-medium);
             padding: 1rem 0;
             position: sticky;
             top: 0;
             z-index: 1000;
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(15px);
         }
 
         .navbar-brand {
@@ -61,11 +65,27 @@
             color: var(--white) !important;
             text-decoration: none;
             transition: var(--transition);
+            position: relative;
         }
 
         .navbar-brand:hover {
             transform: translateY(-2px);
             color: #f0f0f0 !important;
+        }
+
+        .navbar-brand::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--white);
+            transition: width 0.3s ease;
+        }
+
+        .navbar-brand:hover::after {
+            width: 100%;
         }
 
         .navbar-brand img {
@@ -74,6 +94,11 @@
             margin-right: 12px;
             border-radius: 8px;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: var(--transition);
+        }
+
+        .navbar-brand:hover img {
+            transform: rotate(5deg) scale(1.05);
         }
 
         .nav-link {
@@ -114,10 +139,12 @@
             padding: 0.5rem;
             border-radius: 8px;
             background: rgba(255, 255, 255, 0.1);
+            transition: var(--transition);
         }
 
         .navbar-toggler:focus {
             box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.25);
+            background: rgba(255, 255, 255, 0.2);
         }
 
         /* Main Content */
@@ -132,7 +159,7 @@
 
         /* Jumbotron */
         .jumbotron {
-            background: linear-gradient(135deg, var(--sena-green) 0%, var(--sena-blue) 100%);
+            background: var(--gradient-secondary);
             color: var(--white);
             padding: 4rem 2rem;
             border-radius: var(--border-radius);
@@ -154,6 +181,16 @@
             animation: float 6s ease-in-out infinite;
         }
 
+        .jumbotron::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--sena-green), var(--sena-orange), var(--sena-blue));
+        }
+
         @keyframes float {
             0%, 100% { transform: translateY(0px) rotate(0deg); }
             50% { transform: translateY(-20px) rotate(180deg); }
@@ -165,6 +202,7 @@
             margin-bottom: 1rem;
             position: relative;
             z-index: 2;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         .jumbotron p {
@@ -173,6 +211,7 @@
             opacity: 0.95;
             position: relative;
             z-index: 2;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
         }
 
         /* Cards */
@@ -184,6 +223,7 @@
             overflow: hidden;
             background: var(--white);
             position: relative;
+            backdrop-filter: blur(10px);
         }
 
         .card::before {
@@ -193,23 +233,193 @@
             left: 0;
             width: 100%;
             height: 4px;
-            background: linear-gradient(90deg, var(--sena-green), var(--sena-orange));
+            background: var(--gradient-primary);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover::before {
+            transform: scaleX(1);
         }
 
         .card:hover {
-            transform: translateY(-8px);
+            transform: translateY(-10px) scale(1.02);
             box-shadow: var(--shadow-heavy);
         }
 
         .card-header {
-            background: linear-gradient(135deg, var(--sena-gray) 0%, #ffffff 100%);
-            border-bottom: 2px solid var(--sena-green);
+            background: var(--gradient-primary);
+            color: var(--white);
+            border-bottom: none;
             font-weight: 600;
-            color: var(--sena-dark-green);
+            padding: 1.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: right 0.5s ease;
+        }
+
+        .card:hover .card-header::after {
+            right: 100%;
         }
 
         .card-body {
             padding: 2rem;
+            position: relative;
+        }
+
+        /* Instructor and Profile Cards */
+        .instructor-avatar {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, var(--sena-dark-gray) 0%, #495057 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-weight: bold;
+            font-size: 2.5rem;
+            margin: 0 auto;
+            box-shadow: var(--shadow-medium);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .instructor-avatar::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1), transparent 70%);
+            transform: rotate(45deg);
+            transition: var(--transition);
+        }
+
+        .instructor-avatar:hover {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: var(--shadow-heavy);
+        }
+
+        .instructor-avatar:hover::before {
+            animation: shine 0.5s ease-in-out;
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) rotate(45deg); }
+        }
+
+        /* Program Icons */
+        .programa-icon {
+            width: 100px;
+            height: 100px;
+            background: var(--gradient-primary);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 2.5rem;
+            margin: 0 auto;
+            box-shadow: var(--shadow-medium);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .programa-icon::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: var(--transition);
+        }
+
+        .programa-icon:hover {
+            transform: translateY(-5px) rotate(-5deg) scale(1.1);
+            box-shadow: var(--shadow-heavy);
+        }
+
+        .programa-icon:hover::before {
+            left: 100%;
+        }
+
+        /* Info Items */
+        .info-item, .info-card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+            border-left: 4px solid var(--sena-green);
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 0 var(--border-radius) var(--border-radius) 0;
+            box-shadow: var(--shadow-light);
+            transition: var(--transition);
+            position: relative;
+            height: 100%;
+        }
+
+        .info-item:hover, .info-card:hover {
+            transform: translateX(5px);
+            border-left-color: var(--sena-orange);
+            box-shadow: var(--shadow-medium);
+        }
+
+        .info-item::before, .info-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 0;
+            background: var(--sena-orange);
+            transition: height 0.3s ease;
+        }
+
+        .info-item:hover::before, .info-card:hover::before {
+            height: 100%;
+        }
+
+        /* Course Cards */
+        .curso-card {
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .curso-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: var(--shadow-heavy);
+        }
+
+        .curso-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 0;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(57, 169, 0, 0.05));
+            transition: width 0.3s ease;
+        }
+
+        .curso-card:hover::after {
+            width: 100%;
         }
 
         /* Tables */
@@ -217,14 +427,28 @@
             border-radius: var(--border-radius);
             overflow: hidden;
             box-shadow: var(--shadow-light);
+            background: var(--white);
         }
 
         .table thead th {
-            background: linear-gradient(135deg, var(--sena-green) 0%, var(--sena-dark-green) 100%);
+            background: var(--gradient-primary);
             color: var(--white);
             font-weight: 600;
             border: none;
-            padding: 1rem;
+            padding: 1.2rem;
+            text-align: center;
+            border-top: none;
+            position: relative;
+        }
+
+        .table thead th::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--sena-orange), var(--sena-blue));
         }
 
         .table-striped tbody tr:nth-of-type(odd) {
@@ -236,47 +460,82 @@
         }
 
         .table tbody tr:hover {
-            background: rgba(57, 169, 0, 0.1);
+            background: linear-gradient(135deg, rgba(57, 169, 0, 0.1) 0%, rgba(57, 169, 0, 0.15) 100%);
             transform: scale(1.01);
         }
 
         .table td {
-            padding: 1rem;
+            padding: 1.2rem;
             vertical-align: middle;
             border-color: rgba(57, 169, 0, 0.1);
+            position: relative;
+        }
+
+        .table tbody tr:hover td {
+            color: var(--sena-dark-green);
+            font-weight: 500;
         }
 
         /* Buttons */
         .btn-success {
-            background: linear-gradient(135deg, var(--sena-green) 0%, var(--sena-light-green) 100%);
+            background: var(--gradient-primary);
             border: none;
-            border-radius: 8px;
+            border-radius: 10px;
             padding: 0.75rem 2rem;
-            font-weight: 500;
+            font-weight: 600;
             box-shadow: var(--shadow-light);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-success::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
             transition: var(--transition);
         }
 
         .btn-success:hover {
             background: linear-gradient(135deg, var(--sena-dark-green) 0%, var(--sena-green) 100%);
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-medium);
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: var(--shadow-heavy);
+        }
+
+        .btn-success:hover::before {
+            left: 100%;
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, var(--sena-blue) 0%, #0052a3 100%);
+            background: var(--gradient-secondary);
             border: none;
-            border-radius: 8px;
+            border-radius: 10px;
             padding: 0.75rem 2rem;
-            font-weight: 500;
+            font-weight: 600;
             box-shadow: var(--shadow-light);
             transition: var(--transition);
         }
 
+        .btn-primary:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: var(--shadow-heavy);
+        }
+
         .btn-warning {
-            background: linear-gradient(135deg, var(--sena-orange) 0%, #e55100 100%);
+            background: var(--gradient-accent);
             border: none;
             color: var(--white);
+            border-radius: 10px;
+            transition: var(--transition);
+        }
+
+        .btn-warning:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: var(--shadow-heavy);
         }
 
         /* Alerts */
@@ -285,6 +544,23 @@
             border-radius: var(--border-radius);
             box-shadow: var(--shadow-light);
             border-left: 5px solid;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .alert::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 0;
+            background: var(--sena-orange);
+            transition: height 0.3s ease;
+        }
+
+        .alert:hover::before {
+            height: 100%;
         }
 
         .alert-info {
@@ -302,13 +578,134 @@
         /* Badges */
         .badge {
             font-size: 0.85em;
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            font-weight: 500;
+            padding: 0.6rem 1.2rem;
+            border-radius: 25px;
+            font-weight: 600;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
         }
 
-        .badge-success {
-            background: linear-gradient(135deg, var(--sena-green) 0%, var(--sena-light-green) 100%);
+        .badge::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            transition: var(--transition);
+            transform: translate(-50%, -50%);
+        }
+
+        .badge:hover::before {
+            width: 200%;
+            height: 200%;
+        }
+
+        .badge-success, .badge-sena {
+            background: var(--gradient-primary);
+            color: var(--white);
+        }
+
+        .estado-badge {
+            font-size: 0.9rem;
+            padding: 8px 15px;
+        }
+
+        /* Status and Link Styles */
+        .status-active {
+            color: var(--sena-green);
+            font-weight: 600;
+        }
+
+        .status-inactive {
+            color: #dc3545;
+            font-weight: 600;
+        }
+
+        .back-link {
+            text-decoration: none;
+            color: var(--sena-green);
+            font-weight: 600;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .back-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--sena-light-green);
+            transition: width 0.3s ease;
+        }
+
+        .back-link:hover {
+            color: var(--sena-light-green);
+            transform: translateX(-3px);
+        }
+
+        .back-link:hover::after {
+            width: 100%;
+        }
+
+        /* Modality Icons */
+        .modalidad-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #e9ecef 0%, #f8f9fa 100%);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--sena-dark-gray);
+            font-size: 1.5rem;
+            box-shadow: var(--shadow-light);
+            transition: var(--transition);
+        }
+
+        .modalidad-icon:hover {
+            background: var(--gradient-primary);
+            color: var(--white);
+            transform: rotate(10deg) scale(1.1);
+            box-shadow: var(--shadow-medium);
+        }
+
+        /* Timeline */
+        .timeline-item {
+            border-left: 3px solid var(--sena-green);
+            padding-left: 25px;
+            margin-bottom: 25px;
+            position: relative;
+            transition: var(--transition);
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -8px;
+            top: 5px;
+            width: 13px;
+            height: 13px;
+            background: var(--sena-green);
+            border-radius: 50%;
+            box-shadow: 0 0 0 4px var(--white), 0 0 0 6px var(--sena-green);
+            transition: var(--transition);
+        }
+
+        .timeline-item:hover {
+            border-left-color: var(--sena-orange);
+            transform: translateX(5px);
+        }
+
+        .timeline-item:hover::before {
+            background: var(--sena-orange);
+            box-shadow: 0 0 0 4px var(--white), 0 0 0 8px var(--sena-orange);
+            transform: scale(1.2);
         }
 
         /* Footer */
@@ -316,7 +713,7 @@
             background: linear-gradient(135deg, #2d3748 0%, #1a202c 100%);
             color: var(--white);
             text-align: center;
-            padding: 2rem 0;
+            padding: 2.5rem 0;
             margin-top: auto;
             position: relative;
             overflow: hidden;
@@ -328,17 +725,25 @@
             top: 0;
             left: 0;
             width: 100%;
-            height: 3px;
+            height: 4px;
             background: linear-gradient(90deg, var(--sena-green), var(--sena-orange), var(--sena-blue));
+            animation: gradient-flow 3s linear infinite;
+        }
+
+        @keyframes gradient-flow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         footer p {
             margin: 0;
             font-weight: 400;
             opacity: 0.9;
+            font-size: 1.1rem;
         }
 
-        /* Animations */
+        /* Enhanced Animations */
         @keyframes fadeInUp {
             from {
                 opacity: 0;
@@ -350,57 +755,141 @@
             }
         }
 
-        .fade-in-up {
-            animation: fadeInUp 0.6s ease-out;
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
         }
 
-        /* Responsive */
+        .fade-in-up {
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .pulse {
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        /* Responsive Design */
         @media (max-width: 768px) {
             .jumbotron {
-                padding: 2rem 1rem;
+                padding: 2.5rem 1rem;
             }
 
             .jumbotron h1 {
-                font-size: 2rem;
+                font-size: 2.2rem;
             }
 
             .navbar-brand {
-                font-size: 1.2rem;
+                font-size: 1.3rem;
             }
 
             .card-body {
                 padding: 1.5rem;
             }
 
+            .instructor-avatar {
+                width: 100px;
+                height: 100px;
+                font-size: 2rem;
+            }
+
+            .programa-icon {
+                width: 80px;
+                height: 80px;
+                font-size: 2rem;
+            }
+
             .table-responsive {
                 border-radius: var(--border-radius);
+                box-shadow: var(--shadow-light);
             }
         }
 
-        /* Custom scrollbar */
+        @media (max-width: 576px) {
+            .jumbotron h1 {
+                font-size: 1.8rem;
+            }
+
+            .jumbotron p {
+                font-size: 1rem;
+            }
+
+            .card-body {
+                padding: 1rem;
+            }
+
+            .timeline-item {
+                padding-left: 20px;
+            }
+        }
+
+        /* Custom Scrollbar */
         ::-webkit-scrollbar {
-            width: 8px;
+            width: 10px;
         }
 
         ::-webkit-scrollbar-track {
             background: var(--sena-gray);
+            border-radius: 5px;
         }
 
         ::-webkit-scrollbar-thumb {
-            background: linear-gradient(135deg, var(--sena-green), var(--sena-light-green));
-            border-radius: 4px;
+            background: var(--gradient-primary);
+            border-radius: 5px;
+            transition: var(--transition);
         }
 
         ::-webkit-scrollbar-thumb:hover {
             background: linear-gradient(135deg, var(--sena-dark-green), var(--sena-green));
+            box-shadow: 0 2px 5px rgba(57, 169, 0, 0.3);
+        }
+
+        /* Loading Animation */
+        .loading {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .loading::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(57, 169, 0, 0.1), transparent);
+            animation: loading 1.5s infinite;
+        }
+
+        @keyframes loading {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        /* Focus Styles for Accessibility */
+        .btn:focus, .card:focus, .nav-link:focus {
+            outline: 3px solid var(--sena-light-green);
+            outline-offset: 2px;
+        }
+
+        /* Print Styles */
+        @media print {
+            .navbar, footer, .btn {
+                display: none !important;
+            }
+            
+            .card {
+                box-shadow: none !important;
+                border: 1px solid #ddd !important;
+            }
         }
     </style>
 </head>
+
 <body>
-    <nav class="navbar navbar-expand-lg">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-success">
         <div class="container">
             <a class="navbar-brand" href="{% url 'aprendices:inicio' %}">
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSX6Gat1r36ATdBS7sTqqFH8TvIVPMkqsdLgw&s" alt="Logo SENA">
+                <img width="50px" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSX6Gat1r36ATdBS7sTqqFH8TvIVPMkqsdLgw&s" alt="Logo Sena">
                 <strong>SENA APP</strong>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -409,78 +898,37 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'aprendices:inicio' %}">
-                            <i class="fas fa-home me-2"></i>Inicio
-                        </a>
+                        <a class="nav-link" href="{% url 'aprendices:inicio' %}">Inicio</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'aprendices:lista_aprendices' %}">
-                            <i class="fas fa-users me-2"></i>Aprendices
-                        </a>
+                        <a class="nav-link" href="{% url 'aprendices:lista_aprendices' %}">Aprendices</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'instructores:lista_instructores' %}">
-                            <i class="fas fa-users me-2"></i>Instructores
-                        </a>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'programas:lista_programas' %}">
-                            <i class="fas fa-users me-2"></i>Programas
-                        </a>
+                        <a class="nav-link" href="{% url 'instructores:lista_instructores' %}">Instructores</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'admin:index' %}">
-                            <i class="fas fa-cog me-2"></i>Panel Admin
-                        </a>
+                        <a class="nav-link" href="{% url 'programas:lista_programas' %}">Programas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'admin:index' %}">Panel Admin</a>
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
 
-    <main class="container mt-4 fade-in-up">
+    <main class="container mt-4">
         {% block content %}
-        <!-- Ejemplo de contenido para mostrar el diseño -->
-        <div class="jumbotron">
-            <h1><i class="fas fa-graduation-cap me-3"></i>Bienvenido a SENA APP</h1>
-            <p>Sistema de Gestión de Aprendices - Plataforma moderna y eficiente</p>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-6 mb-4">
-                <div class="card">
-                    <div class="card-header">
-                        <i class="fas fa-chart-bar me-2"></i>Estadísticas
-                    </div>
-                    <div class="card-body">
-                        <h5 class="card-title">Panel de Control</h5>
-                        <p class="card-text">Accede a las métricas y estadísticas de los aprendices registrados en el sistema.</p>
-                        <a href="#" class="btn btn-success">Ver Estadísticas</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 mb-4">
-                <div class="card">
-                    <div class="card-header">
-                        <i class="fas fa-user-plus me-2"></i>Nuevo Registro
-                    </div>
-                    <div class="card-body">
-                        <h5 class="card-title">Registrar Aprendiz</h5>
-                        <p class="card-text">Añade un nuevo aprendiz al sistema con toda su información académica.</p>
-                        <a href="#" class="btn btn-primary">Registrar Nuevo</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
         {% endblock %}
     </main>
 
-    <footer>
+    <footer class="bg-dark text-white text-center py-3 mt-5">
         <div class="container">
-            <p><i class="fas fa-copyright me-2"></i>2025 SENA APP - Sistema de Gestión de Aprendices</p>
+            <p>&copy; 2025 SENA APP - Sistema de Gestión de Aprendices</p>
         </div>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>

@@ -17,13 +17,13 @@ class Instructor(models.Model):
         ("DOC", "Doctorado"),
     ]
 
-    documento_identidad = models.IntegerField(max_length=20, unique=True)
+    documento_identidad = models.IntegerField(unique=True)
     tipo_documento = models.CharField(
         max_length=3, choices=TIPO_DOCUMENTO_CHOICES, default="CC"
     )
     nombre = models.CharField(max_length=100)
     apellido = models.CharField(max_length=100)
-    telefono = models.IntegerField(max_length=20, null=True)
+    telefono = models.IntegerField(null=True)
     correo = models.EmailField(max_length=100, null=True)
     fecha_nacimiento = models.DateField()
     ciudad = models.CharField(max_length=100, null=True)

@@ -29,7 +29,6 @@
                         <th>Nivel Formacion</th>
                         <th>Modalidad</th>
                         <th>Meses</th>
-                        <th>Horas</th>
                         <th>Descripcion</th>
                         <th>Centro Formacion</th>
                         <th>Regional</th>
@@ -38,12 +37,11 @@
                 <tbody>
                     {% for programa in lista_programas %}
                     <tr>
-                        <td><strong>{{ programa.codigo}}</strong></td>
+                        <td><strong><a href ="programa/{{ programa.id }}">{{ programa.codigo}}</a></strong></td>
                         <td>{{ programa.nombre }}</td>
                         <td>{{ programa.nivel_formacion }}</td>
                         <td>{{ programa.modalidad }}</td>
                         <td>{{ programa.duracion_meses }}</td>
-                        <td>{{ programa.duracion_horas }}</td>
                         <td>{{ programa.descripcion }}</td>
                         <td>{{ programa.centro_formacion }}</td>
                         <td>{{ programa.regional }}</td>
