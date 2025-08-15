@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+from .views import AprendizFormView
 
 app_name = "aprendices"
 
@@ -15,4 +16,5 @@ urlpatterns = [
         views.detalle_aprendiz,
         name="detalle_aprendiz",
     ),
+    path("agregar_aprendiz/", AprendizFormView.as_view(), name="agregar_aprendiz"),
 ]

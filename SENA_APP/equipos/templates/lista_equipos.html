@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block title %}Lista de Equipos{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-4">Lista de Equipos Registrados</h2>
+
+    <div class="mb-3">
+        <a href="{% url 'equipos:crear_equipo' %}" class="btn btn-primary">
+            <i class="bi bi-plus-circle"></i> Registrar Nuevo Equipo
+        </a>
+    </div>
+
+    {% if equipos %}
+        <div class="table-responsive">
+            <table class="table table-striped table-hover align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Tipo de Equipo</th>
+                        <th>Procedencia</th>
+                        <th>Condición de Uso</th>
+                        <th>Marca</th>
+                        <th>Modelo</th>
+                        <th>Aprendiz</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for equipo in equipos %}
+                        <tr>
+                            <td>{{ equipo.id }}</td>
+                            <td>{{ equipo.get_tipo_equipo_display }}</td>
+                            <td>{{ equipo.get_procedencia_display }}</td>
+                            <td>{{ equipo.get_condicion_uso_display }}</td>
+                            <td>{{ equipo.marca }}</td>
+                            <td>{{ equipo.modelo }}</td>
+                            <td>{{ equipo.aprendiz }}</td>
+                            <td>
+                                <ul class="list-inline">
+                                    <a href="{% url 'equipos:detalle_equipo' equipo.id %}" class="btn btn-info btn-sm">
+                                        <i class="bi bi-eye"></i> Ver
+                                    </a>
+                                </ul>
+                                <ul class="list-inline">
+                                    <a href="{% url 'equipos:editar_equipo' equipo.id %}" class="btn btn-warning btn-sm">
+                                        <i class="bi bi-pencil"></i> Editar
+                                    </a>
+                                </ul>
+                                <ul class="list-inline">
+                                    <form action="{% url 'equipos:eliminar_equipo' equipo.id %}" method="post" style="display:inline;">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-danger btn-sm"
+                                            onclick="return confirm('¿Estás seguro de que deseas eliminar este equipo?');">
+                                            <i class="bi bi-trash"></i> Eliminar
+                                        </button>
+                                    </form>
+                                </ul>
+                            </td>
+                        </tr>                   
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <div class="alert alert-warning" role="alert">
+            No hay equipos registrados en el sistema.
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "aprendices",  # Custom app for apprentices
     "instructores",  # Custom app for instructors
     "programas",  # Custom app for programs
+    "equipos",  # Custom app for equipments
 ]
 
 MIDDLEWARE = [

@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Detalle del equipo{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-4">Detalle del equipo</h2>
+
+    <div class="card">
+        <div class="card-header bg-primary text-white">
+            Información del equipo
+        </div>
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-3">ID</dt>
+                <dd class="col-sm-9">{{ equipo.id }}</dd>
+
+                <dt class="col-sm-3">Tipo de equipo</dt>
+                <dd class="col-sm-9">{{ equipo.get_tipo_equipo_display }}</dd>
+
+                <dt class="col-sm-3">Procedencia</dt>
+                <dd class="col-sm-9">{{ equipo.get_procedencia_display }}</dd>
+
+                <dt class="col-sm-3">Condición de uso</dt>
+                <dd class="col-sm-9">
+                    {% if equipo.procedencia == "SENA" %}
+                        {{ equipo.get_condicion_uso_display }}
+                    {% else %}
+                        No aplica
+                    {% endif %}
+                </dd>
+
+                <dt class="col-sm-3">Marca</dt>
+                <dd class="col-sm-9">{{ equipo.marca }}</dd>
+
+                <dt class="col-sm-3">Modelo</dt>
+                <dd class="col-sm-9">{{ equipo.modelo }}</dd>
+
+                <dt class="col-sm-3">Número de serie</dt>
+                <dd class="col-sm-9">{{ equipo.numero_serie }}</dd>
+
+                <dt class="col-sm-3">Aprendiz asignado</dt>
+                <dd class="col-sm-9">
+                    {{ equipo.aprendiz.nombre }} {{ equipo.aprendiz.apellido }}
+                </dd>
+
+                <dt class="col-sm-3">Observaciones</dt>
+                <dd class="col-sm-9">
+                    {% if equipo.observaciones %}
+                        {{ equipo.observaciones }}
+                    {% else %}
+                        Sin observaciones
+                    {% endif %}
+                </dd>
+            </dl>
+        </div>
+    </div>
+
+    <!-- Botones de acción -->
+    <div class="mt-4">
+        <a href="{% url 'equipos:lista_equipos' %}" class="btn btn-secondary">Volver a la lista</a>
+        <a href="{% url 'equipos:editar_equipo' equipo.id %}" class="btn btn-warning">Editar</a>
+        <form action="{% url 'equipos:eliminar_equipo' equipo.id %}" method="post" style="display:inline;">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger"
+                    onclick="return confirm('¿Está seguro de que desea eliminar este equipo?');">
+                Eliminar
+            </button>
+        </form>
+    </div>
+</div>
+{% endblock %}

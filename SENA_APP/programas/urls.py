@@ -10,4 +10,7 @@ urlpatterns = [
         views.detalle_programa,
         name="detalle_programa",
     ),
+    path(
+        "agregar_programa/", views.ProgramaFormView.as_view(), name="agregar_programa"
+    ),
 ]

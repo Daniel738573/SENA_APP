@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+from .views import InstructorFormView
 
 app_name = "instructores"
 
@@ -9,5 +10,8 @@ urlpatterns = [
         "instructores/instructor/<int:instructor_id>/",
         views.detalle_instructor,
         name="detalle_instructor",
+    ),
+    path(
+        "agregar_instructor/", InstructorFormView.as_view(), name="agregar_instructor"
     ),
 ]

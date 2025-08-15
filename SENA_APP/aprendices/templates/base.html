@@ -882,6 +882,138 @@
                 border: 1px solid #ddd !important;
             }
         }
+        /* CSS solo para campos de formulario */
+    :root {
+        --sena-green: #39A900;
+        --sena-light-green: #4cc200;
+        --sena-dark-green: #2d7d00;
+        --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        --border-radius-small: 8px;
+    }
+
+    /* Labels */
+    label {
+        font-weight: 600;
+        font-size: 0.95rem;
+        color: var(--sena-dark-green);
+        margin-bottom: 0.75rem;
+        position: relative;
+        transition: var(--transition);
+    }
+
+    label::after {
+        content: '';
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: linear-gradient(135deg, var(--sena-green) 0%, var(--sena-light-green) 100%);
+        transition: width 0.3s ease;
+}
+
+    .mb-3:focus-within label::after {
+        width: 100%;
+    }
+
+    /* Form Controls */
+    .form-control, .form-select, input, select, textarea {
+        padding: 1rem 1.25rem;
+        font-size: 1rem;
+        border: 2px solid #e2e8f0;
+        border-radius: var(--border-radius-small);
+        background: #ffffff;
+        color: #2d3748;
+        transition: var(--transition);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+    }
+
+    .form-control:focus, .form-select:focus, input:focus, select:focus, textarea:focus {
+        outline: none;
+        border-color: var(--sena-green);
+        box-shadow: 0 0 0 0.2rem rgba(57, 169, 0, 0.15), 0 4px 12px rgba(57, 169, 0, 0.1);
+        background: #ffffff;
+        transform: translateY(-1px);
+    }
+
+    .form-control:hover, .form-select:hover, input:hover, select:hover, textarea:hover {
+        border-color: var(--sena-light-green);
+        box-shadow: 0 4px 8px rgba(57, 169, 0, 0.08);
+    }
+
+    /* Textarea specific */
+    textarea {
+        resize: vertical;
+        min-height: 120px;
+        font-family: inherit;
+    }
+
+    /* Select specific */
+    select {
+        background-image: url("data:image/svg+xml;charset=utf-8,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+        background-position: right 0.75rem center;
+        background-repeat: no-repeat;
+        background-size: 1.25rem 1.25rem;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        padding-right: 3rem;
+    }
+
+    select:focus {
+        background-image: url("data:image/svg+xml;charset=utf-8,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%2339A900' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+    }
+
+    /* Date inputs */
+    input[type="date"]::-webkit-calendar-picker-indicator,
+    input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+    background-image: url("data:image/svg+xml;charset=utf-8,%3csvg xmlns='http://www.w3.org/2000/svg' fill='%2339A900' viewBox='0 0 20 20'%3e%3cpath d='M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zM4 9h12v7H4V9z'/%3e%3c/svg%3e");
+    background-size: 1.25rem 1.25rem;
+    cursor: pointer;
+    }
+
+    /* Input Focus Effect */
+    .mb-3::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -10px;
+        width: 4px;
+        height: 0;
+        background: linear-gradient(135deg, var(--sena-green) 0%, var(--sena-light-green) 100%);
+        transition: height 0.3s ease;
+        border-radius: 2px;
+    }
+
+    .mb-3:focus-within::before {
+        height: 100%;
+    }
+
+    /* Form Validation */
+    .is-invalid {
+        border-color: #dc3545 !important;
+        box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.15) !important;
+    }
+
+    .is-valid {
+        border-color: var(--sena-green) !important;
+        box-shadow: 0 0 0 0.2rem rgba(57, 169, 0, 0.15) !important;
+    }
+
+    .invalid-feedback, .valid-feedback {
+        font-size: 0.875rem;
+        font-weight: 500;
+        margin-top: 0.5rem;
+        padding-left: 0.75rem;
+    }
+
+    .invalid-feedback {
+        color: #dc3545;
+    }
+
+    .valid-feedback {
+        color: var(--sena-green);
+    }
     </style>
 </head>
 
@@ -902,6 +1034,9 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'aprendices:lista_aprendices' %}">Aprendices</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'equipos:lista_equipos' %}">Equipos</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'instructores:lista_instructores' %}">Instructores</a>
